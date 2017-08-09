@@ -14,6 +14,7 @@ My zombie map
 <div id="zombie_map"></div>
 <script>
     var zombie_map;
+    var old_position		
     var all_markers = []
     var data =
        `52.195001273919786 0.13137459754943848 Zombie.png
@@ -28,7 +29,14 @@ My zombie map
         52.1940279384691 0.13398170471191406 weapons.png`;
     var markers = data.split("\n");
     function initMap() {
-
+	    
+    var marker_position = new google.maps.LatLng(marker_data[0], marker_data[1]);
+    var marker = new google.maps.Marker({
+        position: old_position,
+        map: zombie_map,
+	icon: marker_data[2]
+	});    
+	    
             zombie_map = new google.maps.Map(document.getElementById('zombie_map'), {
                zoom: 10,
                center: {lat: 52.206727, lng: 0.124450}
@@ -55,12 +63,14 @@ My zombie map
       }};
 
       function set_my_position(position){
+	  old_position.setMap(null);    
           var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
           var marker = new google.maps.Marker({
                               position: pos,
                               map: zombie_map,
                               icon: "smileyface.png"
                           });
+	  old_position = marker;    
       }
 
 </script>
